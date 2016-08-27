@@ -1,5 +1,7 @@
 $(function(){
 
+	var ls = localStorage.songlist;
+
 	// TweenMax intro
 	
 	$('[data-toggle="tooltip"]').tooltip();
