@@ -1,6 +1,6 @@
 var htmlTemplates = {
-	band:  '<div id="band-{band.id}" class="row list-group">\
-                 <div class="col-xs-12 btn btn-primary js-toggle-songs js-band-name">\
+	band:  '<div class="row list-group">\
+                 <div id="band-{band.id}" class="col-xs-12 btn btn-primary js-toggle-songs js-band-name">\
              		{band.name} <span class="badge"></span>\
              	 </div>\
                  <div class="band-content-wrapper col-xs-12 list-group hidden">\

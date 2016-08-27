@@ -10,8 +10,8 @@
 <body>
      <div class="container-fluid">
           <ul class="nav nav-tabs">
-               <li class="bands-tab active"><a data-toggle="tab" href="#bands-sk" >SK</a> <span class="badge"></span></li>
-               <li class="bands-tab"><a data-toggle="tab" href="#bands-en">EN</a> <span class="badge"></span></li>
+               <li class="bands-tab active"><a id="tab-1" data-toggle="tab" href="#bands-sk" >SK</a> <span class="badge"></span></li>
+               <li class="bands-tab"><a id="tab-2" data-toggle="tab" href="#bands-en">EN</a> <span class="badge"></span></li>
           </ul>
           <div class="tab-content">
                <div id="bands-sk" class="tab-pane fade in active"></div>
@@ -19,9 +19,11 @@
           </div>
      </div>
      <div class="autoscroll btn-group btn-group-vertical">
-          <div class="autoscroll-button autoscroll-up btn btn-md btn-default clarfix" data-scroll="-1"><span class="glyphicon glyphicon-arrow-up"></span></div>
+          <div class="autoscroll-button autoscroll-start btn btn-md btn-default clarfix" data-scroll="start"><span class="glyphicon glyphicon-fast-backward"></span></div>
+          <div class="autoscroll-button autoscroll-up btn btn-md btn-default clarfix" data-scroll="-1"><span class="glyphicon glyphicon-backward"></span></div>
           <div class="autoscroll-button autoscroll-clear btn btn-md btn-default clarfix" data-scroll="0"><span class="glyphicon glyphicon-stop"></span></div>
-          <div class="autoscroll-button autoscroll-down btn btn-md btn-default clarfix" data-scroll="1"><span class="glyphicon glyphicon-arrow-down"></span></div>
+          <div class="autoscroll-button autoscroll-down btn btn-md btn-default clarfix" data-scroll="1"><span class="glyphicon glyphicon-forward"></span></div>
+          <div class="autoscroll-button autoscroll-end btn btn-md btn-default clarfix" data-scroll="end"><span class="glyphicon glyphicon-fast-forward"></span></div>
      </div>
 </body>
 </html>

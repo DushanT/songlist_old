@@ -1,15 +1,16 @@
 $(function(){
 
-	var ls = localStorage.songlist;
-
 	// TweenMax intro
-	
-	$('[data-toggle="tooltip"]').tooltip();
-
 	var bandsSK = $("#bands-sk"),
 		bandsEN = $("#bands-en"),
 		tabs = $(".bands-tab"),
 		scrollButtons = $(".autoscroll-button");
+
+	var songlistLS = {
+		lastBandId: "",
+		lastSongId: "",
+		lastLangId: "",
+	};
 
 	TweenMax.set([tabs, scrollButtons], {autoAlpha: 0});
 	TweenMax.set('.autoscroll', {
@@ -20,19 +21,13 @@ $(function(){
 	});
 
 	var bands = db.bands;
-	var htmlBands = {
-		sk: '',
-		en: ''
-	};
+	var htmlBands = { sk: '', en: ''};
 	var band = null;
 	var song = null;
 
 	for ( var bandIndex in bands ) {
 		band = bands[bandIndex];
-		var htmlSongs = {
-			sk: '',
-			en: ''
-		};
+		var htmlSongs = { sk: '', en: ''};
 		for ( var songIndex in band.songs ) {
 			song = band.songs[songIndex];
 			var contentWithChords = song.content.replace(/;/g,'<br>').replace(/\[(.+?)\]/g, '<span class="chord">$1</span>');
@@ -50,6 +45,13 @@ $(function(){
 
 	bandsSK.html(htmlBands.sk);
 	bandsEN.html(htmlBands.en);
+
+	var lastScrollPosition = document.body.scrollTop;
+	var scrollSpeed = 0;
+	// var scrollMax = 10;
+	var interval = null;
+
+	$('[data-toggle="tooltip"]').tooltip();
 	
 	$(".bands-tab a").html(function(){
 		var badgeNum = $($(this).attr('href')).children('.btn').length;
@@ -76,6 +78,9 @@ $(function(){
 	});
 
 	tabs.on('click', function() {
+		
+		songlistLS.lastLangId = '#' + $('a', this).attr('id');
+		localStorage.setItem('songlist', JSON.stringify(songlistLS));
 
 		closeSong($(".song-content-wrapper.active"));
 		closeBand($(".band-content-wrapper.active"));
@@ -105,23 +110,34 @@ $(function(){
 		}
 	});
 
-	var lastScrollPosition = document.body.scrollTop;
-	var scrollSpeed = 0;
-	// var scrollMax = 10;
-	var interval = null;
-	$(".autoscroll > div").on('click', function () {
+	
+	scrollButtons.on('click', function () {
+		TweenMax.fromTo($('> span', this), 0.4, { scale: 2.5 }, { scale: 1 });
+
 		// console.log(scrollSpeed, 'before');
 		var dataScroll = $(this).data('scroll');
+		var activeSong = $(".song-content-wrapper.active");
+		if (isNaN(parseInt(dataScroll))) {
+			if ( dataScroll === 'start' ) {
+				TweenMax.to(document.body, 0.5, { scrollTop: activeSong.prev().offset().top });
+			} else if ( dataScroll === 'end' ) {
+				TweenMax.to(document.body, 0.5, { scrollTop: activeSong.offset().top + activeSong.height() - $(window).height() });
+			}
+			return;
+		}
 		if (scrollSpeed === 0) {
 			scrollSpeed = dataScroll;
 		}
-		if( interval === null || interval !== null && /*scrollSpeed < scrollMax && scrollSpeed > -scrollMax && */dataScroll !== 0) {
+
+		if( interval === null && dataScroll !== 0 || interval !== null && dataScroll !== 0) {
 			clearInterval(interval);
 			var absScrollSpeed = Math.abs(scrollSpeed);
 			// console.log(dataScroll, 'data');
 			interval = setInterval(function(){
+
 				document.body.scrollTop += scrollSpeed > 0 ? 1 : -1 ;
 				// console.log(lastScrollPosition, document.body.scrollTop);
+				activeScrollPositionBottom = activeSong.offset().top + activeSong.height();
 				if (lastScrollPosition === document.body.scrollTop || (activeScrollPositionBottom > 0 && activeScrollPositionBottom <= (document.body.scrollTop + $(window).height()))) {
 					clear();
 				}
@@ -133,7 +149,7 @@ $(function(){
 			}
 			// console.log(scrollSpeed, 'after');
 		} else {
-			// console.log('clear');
+			console.log('clear2');
 			clear();
 		}
 	});
@@ -145,29 +161,42 @@ $(function(){
 	}
 
 	function openSong(element) {
+		if(element && !element.length) {return;}
+
+		songlistLS.lastSongId = '#' + element.prev().attr('id');
+		localStorage.setItem('songlist', JSON.stringify(songlistLS));
+		
 		$('.song-content-wrapper').addClass('hidden').removeClass('active');
 		TweenMax.set(element, {className:'+=active'});
 		TweenMax.set(element, { className: '-=hidden', opacity: 0 });
 		tlOpenSong.from(element, 0.5, { height: 0, clearProps: 'height' })
 			.to(element, 0.5, { opacity: 1 }, '-=0.2')
 			.to(document.body, 0.6, { scrollTop: element.prev().offset().top, onComplete: function(){
-				activeScrollPositionBottom = element.offset().top + element.height();
 				if(element.height() > $(window).height()) {
 					TweenMax.staggerFromTo(scrollButtons, 0.3, { x: 100 }, { autoAlpha: 1, x: 0, ease: Back.easeOut }, 0.05);
+					TweenMax.staggerTo(scrollButtons, 0.3, { rotation: 90 }, 0.05);
 				}
 			}}, '-=0.1');
 	}
 
 	function closeSong(element) {
 		if(element && !element.length) {return;}
+		
+		songlistLS.lastSongId = "";
+		localStorage.setItem('songlist', JSON.stringify(songlistLS));
 
 		TweenMax.set(element, {className:'-=active'});
-		tlCloseSong.staggerTo(scrollButtons, 0.15, { autoAlpha: 0, x: 100, ease: Back.easeInOut }, 0.1)
+		tlCloseSong.staggerTo(scrollButtons, 0.3, { rotation: 0, autoAlpha: 0, x: 100, ease: Back.easeInOut }, 0.05)
 			.to(element, 0.5, { opacity: 0, height: 0 })
 			.set(element, {className: '+=hidden', clearProps: 'height' });
 	}
 
 	function openBand(element) {
+		if(element && !element.length) {return;}
+
+		songlistLS.lastBandId = '#' + element.prev().attr('id');
+		localStorage.setItem('songlist', JSON.stringify(songlistLS));
+
 		$('.band-content-wrapper').addClass('hidden');
 		closeSong($('.song-content-wrapper.active'));
 		TweenMax.set(element, {className: '-=hidden', opacity: 0 });
@@ -178,9 +207,31 @@ $(function(){
 	function closeBand(element) {
 		if(element && !element.length) {return;}
 
+		songlistLS.lastBandId = "";
+		songlistLS.lastSongId = "";
+		localStorage.setItem('songlist', JSON.stringify(songlistLS));
+
 		tlCloseBand.to(element, 0.5, { opacity: 0, height: 0 })
 			.set(element, {className: '+=hidden', clearProps: 'height' })
 			.set(element, {className: '-=active'});
+	}
+
+	var lastLang = null;
+	var lastBand = null;
+	var lastSong = null;
+	if ( localStorage.songlist && ( songlistLS = JSON.parse(localStorage.songlist)) ) {
+		
+		if ((lastLang = $(songlistLS.lastLangId)) && lastLang.length) {
+			lastLang.click();
+		}
+
+		if ((lastBand = $(songlistLS.lastBandId)) && lastBand.length) {
+			openBand(lastBand.next());
+		}
+		
+		if ((lastSong = $(songlistLS.lastSongId)) && lastSong.length) {
+			openSong(lastSong.next());
+		}
 	}
 
 });
