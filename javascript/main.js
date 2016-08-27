@@ -45,7 +45,7 @@ $(function(){
 							.replace(/\{band\.name\}/, band.name)
 							.replace(/\{songs\.html\}/, htmlSongs[band.lang]);
 	}
-	
+
 	bandsSK.html(htmlBands.sk);
 	bandsEN.html(htmlBands.en);
 	
@@ -61,7 +61,7 @@ $(function(){
 	var tlPageLoad = new TimelineMax();
 	var tlOpenSong = new TimelineMax();
 	var tlCloseSong = new TimelineMax();
-	var tlCloseBane = new TimelineMax();
+	var tlCloseBand = new TimelineMax();
 
 	tlPageLoad.staggerFromTo(tabs, 0.3, { y: 100 }, { x: 0, y: 0, autoAlpha: 1, ease: Power2.easeOut }, 0.5)
 		.staggerFromTo('.tab-pane .row', 0.1, { opacity: 0, yPercent: -100 }, { yPercent: 0, opacity: 1 }, 0.01);
@@ -74,6 +74,7 @@ $(function(){
 	});
 
 	tabs.on('click', function() {
+
 		closeSong($(".song-content-wrapper.active"));
 		closeBand($(".band-content-wrapper.active"));
 	});
