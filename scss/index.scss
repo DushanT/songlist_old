@@ -1,0 +1,18 @@
+/* styly pre index */
+
+.chord {
+	font-weight: bold;
+	vertical-align: super;
+	font-size: 1.5rem;
+}
+.song-name {
+	cursor: pointer;
+}
+.song-content {
+	width: 80%;
+}
+.autoscroll {
+	&-up, &-down, &-clear {
+		text-align: center;
+	}
+}
