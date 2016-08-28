@@ -576,7 +576,7 @@ var db = {
             "songs": {
                 "0": {
                     "title": "Igelit",
-                    "content": ";;  1. [D]Ukrytý v stínu lesa,  [A]igelit,  to kdyby přišel [G]k ránu [D]déšť.  Pod hlavou, boty, nůž,  tá[A]tovou bundu šitou z  mas[D]káčů.  K ránu se mlhy zvednou[A]a ptáci volaj  Hele, lidi [G]sví[D]tá, pak větvičky si nalámou  na [A]oheň aby uvařili [D]čaj.;  ® A všichni se [h]znaj, [A7]znaj, [D]znaj  a blázněj a [G]zpí[D]vaj, a po cestách [h]dál,  [A7]dál, [D]dál hledaj [e]normální [D]svět.  2. Ukrytý v stínu lesa k večeru  znavený nohy skládaj, kytara zpívá o tom,  jak dřív bylo líp, ten, kdo neví, nepochopí,  nepromíjí čas nic, všechno vrátí, ta chvilka,  co máš na život ti uplyne  jako od ohýnků dým. ®  © Ukrytý v stínu lesa igelit,  to kdyby přišel k ránu déšť.  ;;;"
+                    "content": ";;  1. [D]Ukrytý v stínu lesa,  [A]igelit,  ;  to kdyby přišel [G]k ránu [D]déšť.  ;  Pod hlavou, boty, nůž,  ;  tá[A]tovou bundu šitou z  mas[D]káčů.  ;;  K ránu se mlhy zvednou[A]a ptáci volaj  ;  Hele, lidi [G]sví[D]tá, ;  pak větvičky si nalámou  ;  na [A]oheň aby uvařili [D]čaj.;;  ® A všichni se [h]znaj, [A7]znaj, [D]znaj  ;  a blázněj a [G]zpí[D]vaj, a po cestách [h]dál,  ;  [A7]dál, [D]dál hledaj [e]normální [D]svět.  ;;  2. Ukrytý v stínu lesa k večeru  ;  znavený nohy skládaj, kytara zpívá o tom,  ;  jak dřív bylo líp, ten, kdo neví, nepochopí,  ;  nepromíjí čas nic, všechno vrátí, ta chvilka,  ;  co máš na život ti uplyne  jako od ohýnků dým. ;;  ®  ;;  © Ukrytý v stínu lesa igelit,  ;  to kdyby přišel k ránu déšť.  "
                 },
                 "1": {
                     "title": "Na kameni kámen",
