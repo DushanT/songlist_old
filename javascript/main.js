@@ -174,7 +174,7 @@ $(function(){
 			.to(document.body, 0.6, { scrollTop: element.prev().offset().top, onComplete: function(){
 				if(element.height() > $(window).height()) {
 					TweenMax.staggerFromTo(scrollButtons, 0.3, { x: 100 }, { autoAlpha: 1, x: 0, ease: Back.easeOut }, 0.05);
-					TweenMax.staggerTo(scrollButtons, 0.3, { rotation: 90 }, 0.05);
+					TweenMax.staggerTo('.autoscroll .glyphicon', 0.3, { rotation: 90, y: 2 }, 0.05);
 				}
 			}}, '-=0.1');
 	}
