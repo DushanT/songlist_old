@@ -1,9 +1,8 @@
 $(function(){
 
 	// TweenMax intro
-	var bandsSK = $("#bands-sk"),
-		bandsEN = $("#bands-en"),
-		tabs = $(".bands-tab"),
+	var mainContent = $("#main-content"),
+		mainNav = $("#main-nav"),
 		scrollButtons = $(".autoscroll-button");
 
 	var songlistLS = {
@@ -12,22 +11,22 @@ $(function(){
 		lastLangId: "",
 	};
 
-	TweenMax.set([tabs, scrollButtons], {autoAlpha: 0});
-	TweenMax.set('.autoscroll', {
-		position: 'fixed',
-		right: 0,
-		top: '50%',
-		yPercent: -50,
-	});
-
 	var bands = db.bands;
-	var htmlBands = { sk: '', en: ''};
+	var htmlBands = [];
+	var countBands = [];
 	var band = null;
 	var song = null;
 
 	for ( var bandIndex in bands ) {
 		band = bands[bandIndex];
-		var htmlSongs = { sk: '', en: ''};
+		var htmlSongs = [];
+		if (htmlBands[band.lang] === undefined) {
+			htmlBands[band.lang] = '';
+			countBands[band.lang] = 1;
+		} else {
+			countBands[band.lang]++;
+		}
+		htmlSongs[band.lang] = '';
 		for ( var songIndex in band.songs ) {
 			song = band.songs[songIndex];
 			var contentWithChords = song.content.replace(/;/g,'<br>').replace(/\[(.+?)\]/g, '<span class="chord">$1</span>');
@@ -40,11 +39,24 @@ $(function(){
 		htmlBands[band.lang] += htmlTemplates.band
 							.replace(/\{band\.id\}/, bandIndex)
 							.replace(/\{band\.name\}/, band.name)
+							.replace(/\{band\.badge\}/, Object.keys(band.songs).length)
 							.replace(/\{songs\.html\}/, htmlSongs[band.lang]);
 	}
 
-	bandsSK.html(htmlBands.sk);
-	bandsEN.html(htmlBands.en);
+	var bandId = 1;
+	for ( var bandLang in htmlBands ) {
+		$(htmlTemplates.tab
+			.replace(/\{tab\.id\}/, bandId++)
+			.replace(/\{tab\.lang\}/, bandLang)
+			.replace(/\{tab\.langUpper\}/, bandLang.toUpperCase())
+			.replace(/\{tab\.badge\}/, countBands[bandLang]))
+			.appendTo(mainNav);
+		
+		$(htmlTemplates.bandsWrapper.replace(/\{band\.lang\}/, bandLang))
+			.html(htmlBands[bandLang])
+			.appendTo(mainContent);
+	}
+	
 
 	var lastScrollPosition = document.body.scrollTop;
 	var scrollSpeed = 0;
@@ -52,30 +64,14 @@ $(function(){
 	var interval = null;
 
 	$('[data-toggle="tooltip"]').tooltip();
-	
-	$(".bands-tab a").html(function(){
-		var badgeNum = $($(this).attr('href')).children('.btn').length;
-		if (badgeNum !== 0) {
-			$(this).next('.badge').html(badgeNum > 1 ? badgeNum + ' bands' : badgeNum + ' band');
-		}
-	});
-
-	// TweenMax.set('.tab-pane .row', {  });
 
 	var tlPageLoad = new TimelineMax();
 	var tlOpenSong = new TimelineMax();
 	var tlCloseSong = new TimelineMax();
 	var tlCloseBand = new TimelineMax();
 
-	tlPageLoad.staggerFromTo(tabs, 0.3, { y: 100 }, { x: 0, y: 0, autoAlpha: 1, ease: Power2.easeOut }, 0.5)
-		.staggerFromTo('.tab-pane .row', 0.1, { opacity: 0, yPercent: -100 }, { yPercent: 0, opacity: 1 }, 0.01);
-
-	$(".js-band-name").each(function(){
-		var badgeNum = $(this).next('.list-group').children('.list-group-item').length;
-		if (badgeNum !== 0) {
-			$(".badge", this).html(badgeNum > 1 ? badgeNum + ' songs' : badgeNum + ' song');
-		}
-	});
+	var tabs = $(".bands-tab");
+	tlPageLoad.staggerFromTo(tabs, 0.5, { xPercent: -100 }, { xPercent: 0, autoAlpha: 1, ease: Power2.easeOut }, 0.5);
 
 	tabs.on('click', function() {
 		
@@ -94,7 +90,7 @@ $(function(){
 			openSong(next);
 		} else {
 			closeSong(next);
-			TweenMax.to(document.body, 1, { scrollTop: _.offset().top });
+			scrollToElement(_, 1);
 		}
 	});
 
@@ -103,10 +99,10 @@ $(function(){
 		var next = _.next();
 		if (next.hasClass('hidden')) {
 			openBand(next);
-			TweenMax.to(document.body, 0.6, { scrollTop: _.offset().top});
+			scrollToElement(_, 0.6);
 		} else {
 			closeBand(next);
-			TweenMax.to(document.body, 0.6, { scrollTop: _.offset().top});
+			scrollToElement(_, 0.6);
 		}
 	});
 
@@ -119,9 +115,9 @@ $(function(){
 		var activeSong = $(".song-content-wrapper.active");
 		if (isNaN(parseInt(dataScroll))) {
 			if ( dataScroll === 'start' ) {
-				TweenMax.to(document.body, 0.5, { scrollTop: activeSong.prev().offset().top });
+				scrollToElement(activeSong.prev(), 0.5);
 			} else if ( dataScroll === 'end' ) {
-				TweenMax.to(document.body, 0.5, { scrollTop: activeSong.offset().top + activeSong.height() - $(window).height() });
+				scrollToElement(activeSong, 0.5, activeSong.offset().top + activeSong.height() - $(window).height());
 			}
 			return;
 		}
@@ -170,13 +166,14 @@ $(function(){
 		TweenMax.set(element, {className:'+=active'});
 		TweenMax.set(element, { className: '-=hidden', opacity: 0 });
 		tlOpenSong.from(element, 0.5, { height: 0, clearProps: 'height' })
-			.to(element, 0.5, { opacity: 1 }, '-=0.2')
-			.to(document.body, 0.6, { scrollTop: element.prev().offset().top, onComplete: function(){
+			.to(element, 0.5, { opacity: 1, onComplete: function () {
+				scrollToElement(element.prev(), 0.6);
 				if(element.height() > $(window).height()) {
 					TweenMax.staggerFromTo(scrollButtons, 0.3, { x: 100 }, { autoAlpha: 1, x: 0, ease: Back.easeOut }, 0.05);
 					TweenMax.staggerTo('.autoscroll .glyphicon', 0.3, { rotation: 90, y: 2 }, 0.05);
 				}
-			}}, '-=0.1');
+			}}, '-=0.2');
+
 	}
 
 	function closeSong(element) {
@@ -214,6 +211,13 @@ $(function(){
 		tlCloseBand.to(element, 0.5, { opacity: 0, height: 0 })
 			.set(element, {className: '+=hidden', clearProps: 'height' })
 			.set(element, {className: '-=active'});
+	}
+
+	function scrollToElement(element, duration, offset) {
+		var $body = $(document.body);
+		offset = offset || element.offset().top;
+
+		TweenMax.to($body, duration, { scrollTop: offset - parseInt($body.css('paddingTop'))});
 	}
 
 	var lastLang = null;

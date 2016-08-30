@@ -1,4 +1,7 @@
 /* styly pre index */
+body {
+	padding-top: 50px;
+}
 .chord {
 	font-weight: bold;
 	vertical-align: super;
@@ -11,7 +14,14 @@
 	width: 80%;
 }
 .autoscroll {
+	position: fixed;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
 	&-up, &-down, &-clear {
 		text-align: center;
+	}
+	&-button {
+		opacity: 0;
 	}
 }
