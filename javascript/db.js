@@ -775,6 +775,42 @@ var db = {
                     "content": ";;[C]Drinking in the morning sun, [F]blinking in the morning sun;[G]Shaking off the heavy one, yeah [F]heavy like a loaded gun;[C]What made me behave that way? [F]Using words i never say;I can [G]only think it must be love;Oh [F]anyway, it's looking like a beautiful day...[C];;[C]Someone tell me how I feel, it's [F]silly wrong but vivid right;Oh, [G]kiss me like a final meal, yeah [F]kiss me like we die tonight;;Cause [C]holy cow i love you eyes and [F]only now i see the light;Yeah [G]lying with you half awake;Oh [F]anyway it's looking like a beautiful day...[C];\t;[C]When my face is chamois creased;[F]If you think i winked I did;[G]laugh politely at repeats;Yeah [F]kiss me when my lips are thin;;Cause [C]holy cow i love your eyes and [F]only now i see the light;Yeah [G]lying with you half awake, stumbling over what to say;Well anyway, it's looking like a beautiful day...[C];;So [C]throw those curtains [B]wide;One [F]day like this a year, it'd see me [C]right  4x;  ;[C]Holy cow i love your [B]eyes.. and [F]only now i see the [C]light..  2x;;[C]Throw those curtains [B]wide;One [F]day like this a year, it'd see me [C]right  4x  fade out..  ;;;"
                 }
             }
+        },
+        "39": {
+            "name": "Extreme",
+            "lang": "en",
+            "songs": {
+                "0": {
+                    "title": "More than words",
+                    "content": ";;[G];[G]Saying I lo[Cadd9]ve you is;[Ami7]not the words I [C]want to [D]hear from [G]you;[G]It's not that I [Cadd9]want you;[Ami7]not to say but [C]if you [D]only [Emi]knew;[Hmi7]Ho-ow [Ami7]ea-sy;[D]It would be to [G]show me [Emi]feel;[Hmi7]More than [Ami7]words  is [D7]all you have to [G7]do;[G7]To make it real [C];[C]Then you [Cmi]wouldn't have to [G]say;That you lo[Emi7]ve me 'cos;[Ami7]I'd  al[D7]ready kn[G]ow:;;[G]What would you do [Emi]heart was [Hmi]torn in [C]two;[C]More than words to [Ami7]feel that your lo[D7]ve for me is real[G];[G]What would you say [Emi7]took those [Hmi7]words a[C]way?;[C]Then you couldn't make [Ami7]new;Just by [D7]saying I love [G]you (Repeat intro x2);;Now that I've tried to;Talk to you and make you understand;All that you have to do is;Close your eyes and just reach out your hands;And touch me;Hold me close don't ever let me go;More than words;Is all I ever needed you to show;Then you wouldn't have to say;That you love me;Cos I'd All Ready Know  ;;;"
+                }
+            }
+        },
+        "40": {
+            "name": "Jaro Filip",
+            "lang": "sk",
+            "songs": {
+                "0": {
+                    "title": "Cez okno",
+                    "content": ";;Na [Ami]celý svet sa dívam [D]cez okno;;lebo [F]všade dobre doma najlep[C]šie [E];;Na celý svet zabúdam cez okno;;po ruskej vodke ho mám najväčšie;;;;[Fmaj7]Chicago Paríž, Dilí Róma;;[Ami]Cez okno vidím a sedím doma [Ami];;[F]Chicago Paríž, Dilí Róma;;[Ami]Cez okno vidím a sedím doma [Ami];;;;®: Cez ok[F]no si môžme tykať;;cez ok[D]no sa môžme stýkať;;cez ok[C]no vyletí dýka;;cez ok[E]no zastrelím býka;;cez ok[F]no sa krásne hýka;;cez ok[D]no urazím strýka;;cez ok[C]no budeme pykať;;cez ok[E]no skúšame dýchať;;;;Na celý svet sa dívam cez okno;;doma je najlepšie a všade je dobre;;Celý svet zabúdam cez okno;;každý to okno odo mňa žobre;;;;Čechov, Maďarov a svet dindov;;pozorne sledujem cez svoj Window;;;;®: Cez okno si môžme tykať;;cez okno sa môžme stýkať;;cez okno vyletí dýka;;cez okno zastrelím býka;;cez okno sa krásne hýka;;cez okno urazím strýka;;cez okno budeme pykať;;cez okno mi môžeš vieš čo ..  ;;;"
+                },
+                "1": {
+                    "title": "Do Batôžka",
+                    "content": ";;[Emi] Do batôžka si nalož [D] pretvárku, [C] lož a faloš ;[Emi] a potom ich hoď z mosta [G] do vody ;[F#mi] Bez pretvárky a falše [C] hneď by ti bolo krajšie ;[D] Hneď by tu bolo viacej [Emi] pohody. ;;Ak k tomu pridáš hádky, ach, to by boli sviatky ;keby sa ľudia vadiť prestali ;veď stačia dve - ti zvady a hneď si bez nálady ;a krvný tlak sa nechce ustáliť. ;;Ref: ;[G] Načo sú hlúpe [A] spory, [F#mi] čo vedú poda [C] ktorí ;[D] a vyzerajú pritom [Emi] nevinne ;[G] je lepšie zaťať [A] zuby [F#mi] a ak ťa jazyk [C] svrbí ;[D] tak si ho radšej omoč [Emi] vo víne. ;;Klebety, škriepky plané, vykašlime sa na ne ;vyhubme razom túto záhubu ;a tí, čo pikle kuli, dostanú po papuli ;dáme im jednoducho zámku na hubu. ;;Do batôžka si nalož pretvárku, lož a faloš ;a pekne zahoď všetky do studne ;a rovno z prvej várky, skús život bez pretvárky ;a uvidíš, či z teba ubudne.  ;;;"
+                },
+                "2": {
+                    "title": "Spomínam na Paríž",
+                    "content": ";;[Cmaj]Spomínam [Fmaj]na Paríž;[Cmaj]v útrápách [Fmaj]z intelektu ;[Cmaj]spomínam [Fmaj]na Paríž;[Esus4]predo mnou [E]flaša sektu ;[Ami]spomínam [D]na Paríž;[Ami]pení sa [D]Seina zvodná ;[Ami]spomínam [D]na Paríž ;[Ami]vyprázdnim [D]pohár do [G]dna ;;Spomínam na Paríž ;tie spomienky sú staré ;spomínam na Paríž ;čo asi robí Marais ;spomínam na Paríž ;v kaviarni sedí Funés ;spomínam na Paríž ;na place Pigalle ma unes ;;Spomínam na Paríž ;na rána v Moulin Rouge ;spomínam na Paríž ;a padám do kalúž ;spomínam na Paríž ;v zrkadle miznú tváre ;spomínam na Paríž ;a tíchne hudba v bare ;;Spomínam na Paríž ;ostávam sám so sebou ;spomínam na Paríž ;a nikdá som tam nebou ;spomínam na Paríž ;a ty mi neveríš ;[G]a vravíš ;[C]slová [Ami]slová [C]slová [Ami];;Tak ešte [D]jeden Martell ;madam [G]Slováko[C]vá [Ami]  ;;;"
+                },
+                "3": {
+                    "title": "Sťahovaví vtáci",
+                    "content": ";;[Dmi],[F],[Gmi].[A] x2;;[Dmi]Tí[F]sťahovaví vtáci;[Gmi]už zase odlie[A]tajú;tí sťahovaví vtáci;údajne kamsi na juh;[Dmi]neznáme[F]miesto dole[Gmi]tu;[A]prosím ťa stiahni[B]roletu;iba[E]nám pletú hlavy;[A]vtáci sťahovaví;;Tí sťahovaví vtáci;ach o čo ľahšie to má;tí sťahovaví vtáci;ten kto je všade doma;skúšal som lietať bez krídel;a hneď mi každý závidel;iba nám pletú hlavy;vtáci sťahovaví;;Medzihra:[Dmi],[F],[Gmi],[A]3x[B],[E],[A],[Gmi],[F],[E],[Dmi];;Tí sťahovaví vtáci;občas sa nan ich rozpomeniem;keď lietam od milenky k žene;a neviem či som doma tu či tam;možno sa na to opýtam;keď vtáci sťahovaví;priletia zas k nám  ;;;"
+                },
+                "4": {
+                    "title": "My",
+                    "content": ";;  Jaro Filip  My  1.  [Cmi]My  sme národ holubi[B]čí,  [G#]nikto  nám nič nedoži[Gsus4]čí.  [G]  Každý na nás iba kričí,  je to o nás známe.  2. Kde kto z nás len kožu derie,  podchvíľou z nás lieta perie.  Občas nás to strašne zlostí,  lebo nie sme takí sprostí  ako vyzeráme.  3. My sme nerozbili atóm - to je pravda a čo na tom.  Skúste zrátať ľudia premilí, tie kotrby, čo sme rozbili.  My sme neponúkli svetu Pytagorovu vetu a napriek tomu sme tu  a s tým sa bude treba zmieriť.  4. Aj keď sme ešte trochu mladí,  nik si s nami neporadí.  Napriek tomu si však radi,  sem-tam zavzdycháme.  5. My sme národ holubičí,  nikto nám nič nedožičí.  Každý na nás iba kričí,  jedným slovom je to o nás  je to o nás známe.  ;;;"
+                }
+            }
         }
     }
 };
