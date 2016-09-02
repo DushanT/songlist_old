@@ -2,7 +2,7 @@ $(function(){
 
 	// TweenMax intro
 	var mainContent = $("#main-content"),
-		mainNav = $("#main-nav"),
+		mainNav = $(".main-nav"),
 		scrollButtons = $(".autoscroll-button");
 
 	var songlistLS = {
@@ -29,7 +29,11 @@ $(function(){
 		htmlSongs[band.lang] = '';
 		for ( var songIndex in band.songs ) {
 			song = band.songs[songIndex];
-			var contentWithChords = song.content.replace(/;/g,'<br>').replace(/\[(.+?)\]/g, '<span class="chord">$1</span>');
+			var contentWithChords = song.content
+							.replace(/;/g,'<br>')
+							.replace(/\[[hH](.*?)\]/g, '[B$1]')
+							.replace(/\[(.+?)\]/g, '<span class="chord">$1</span>');
+
 			htmlSongs[band.lang] += htmlTemplates.song
 							.replace(/\{song\.id\}/, bandIndex + '-' + songIndex)
 							.replace(/\{song\.title\}/g, song.title)
@@ -45,13 +49,14 @@ $(function(){
 
 	var bandId = 1;
 	for ( var bandLang in htmlBands ) {
-		$(htmlTemplates.tab
+		mainNav.append($(htmlTemplates.tab
 			.replace(/\{tab\.id\}/, bandId++)
 			.replace(/\{tab\.lang\}/, bandLang)
 			.replace(/\{tab\.langUpper\}/, bandLang.toUpperCase())
 			.replace(/\{tab\.badge\}/, countBands[bandLang]))
-			.appendTo(mainNav);
-		
+		);
+
+
 		$(htmlTemplates.bandsWrapper.replace(/\{band\.lang\}/, bandLang))
 			.html(htmlBands[bandLang])
 			.appendTo(mainContent);
@@ -71,7 +76,7 @@ $(function(){
 	var tlCloseBand = new TimelineMax();
 
 	var tabs = $(".bands-tab");
-	tlPageLoad.staggerFromTo(tabs, 0.5, { xPercent: -100 }, { xPercent: 0, autoAlpha: 1, ease: Power2.easeOut }, 0.5);
+	// tlPageLoad.staggerFromTo(tabs, 0.5, { yPercent: -100, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, ease: Power2.easeOut }, 0.5);
 
 	tabs.on('click', function() {
 		
@@ -148,6 +153,67 @@ $(function(){
 			console.log('clear2');
 			clear();
 		}
+	});
+
+	var chords = ['A','B','C','D','E','F','G'];
+	
+	$(".transpose").on('click', function () {
+		var $chords = $(this).parents('.song-content-wrapper').find('.chord');
+		var transpose = parseInt($(this).data('transpose'));
+
+		$chords.each(function() {
+
+			var match = $(this).text().match(/^([a-gA-G])((?:#|is))?((?:b|es|s))?(.*)/);
+
+			var now = match[0],
+				chord = match[1],
+				isSharp = match[2] !== undefined,
+				isFlat = match[3] !== undefined,
+				end = match[4],
+				indexChord = chords.indexOf(chord.toUpperCase()),
+				noSharp = [1,4].indexOf(indexChord) !== -1, // B, E
+				noFlat = [2,5].indexOf(indexChord) !== -1; // C, F
+
+			var transposedChord = '';
+			var newIndex = (indexChord + transpose);
+			var indexTransposed = 0;
+			if(newIndex < 0) {
+				indexTransposed = chords.length + newIndex;
+			} else if( newIndex > chords.length - 1) {
+				indexTransposed = newIndex % chords.length;
+			} else {
+				indexTransposed = newIndex;
+			}
+			// ak mame sharp a ideme hore menime akord a mazeme sharp
+			// ak mame sharp a ideme dole nemenime akord mazeme sharp
+			if (isSharp) {
+				transposedChord += transpose > 0 ? chords[indexTransposed] : chord;
+			}
+			// ak mame flat a ideme hore nemenime akord a mazeme flat
+			// ak mame flat a ideme dole menime akord a mazeme flat
+			else if (isFlat) {
+				transposedChord += transpose < 0 ? chords[indexTransposed] : chord;
+			}
+			// Ak mame nic a ideme hore nemenime akord a menime sharp - ak je to B alebo E menime akord iba
+			// ak mame nic a ideme dole nemenime akord a menime flat - ak je to C alebo F menime akord iba 
+			else {
+				// ak B alebo E
+				if (noSharp) {
+					transposedChord += transpose > 0 ? chords[indexTransposed] : chord + 'b';
+				} // ak C alebo F
+				else if (noFlat) {
+					transposedChord += transpose < 0 ? chords[indexTransposed] : chord + '#';
+				} // ostatne akordy
+				else {
+					transposedChord += transpose > 0 ? chord + '#' : chord + 'b';
+				}
+
+			}
+
+			$(this).text(transposedChord + end);
+
+		});
+
 	});
 
 	function clear() {

@@ -1,6 +1,6 @@
 /* styly pre index */
 body {
-	padding-top: 50px;
+	// padding-top: 50px;
 }
 .chord {
 	font-weight: bold;
@@ -10,9 +10,7 @@ body {
 .song-name {
 	cursor: pointer;
 }
-.song-content {
-	width: 80%;
-}
+
 .autoscroll {
 	position: fixed;
 	right: 0;
@@ -24,4 +22,9 @@ body {
 	&-button {
 		opacity: 0;
 	}
+}
+
+.transposition {
+	margin-top: 20px;
+	margin-left: 10px;
 }

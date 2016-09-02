@@ -6,7 +6,7 @@ var db = {
             "songs": {
                 "1": {
                     "title": "Nepoznám",
-                    "content": ";;IMT Smile  Nepoznám  [Ami]Nepo[C]znám krajšie [G]hviezdy, [E]ako[Ami]tie  ktoré sú [C]v Tvojich [G]očiach [E]ukryté[C]ktorých noc[G]je   [E]ako [Ami]deň  a len [C]spánok lahuč[G]ký vie im po[E]núknuť [Ami]tieň.  Nepoznám krajšie slová ako tie,;ktorými vždy moju hlavu popletieš.;Vychádzajú z dvier tvojich pier,;bozk je kľúčom jediným,ktorým ich zamknúť viem.  ®:[Ami]Nepo[dmi]znám[E] ...  Nepoznám krajšie vrchy ako tie,;ktorými máš svoje telo ozdobené.;Pri výstupe na ne ustanem.;Budem sa po nich túlať, kým nebudú zmapované  ;;;"
+                    "content": ";;[Ami]Nepo[C]znám krajšie [G]hviezdy, ;[E]ako[Ami]tie  ;ktoré sú [C]v Tvojich [G]očiach ;[E]ukryté [C]ktorých noc[G]je   ;[E]ako [Ami]deň  ;a len [C]spánok lahuč[G]ký ;vie im po[E]núknuť [Ami]tieň.  ;;Nepoznám krajšie slová ako tie,;ktorými vždy moju hlavu popletieš.;Vychádzajú z dvier tvojich pier,;bozk je kľúčom jediným,ktorým ich zamknúť viem.  ;;®:[Ami]Nepo[Dmi]znám[E] ...  ;;Nepoznám krajšie vrchy ako tie,;ktorými máš svoje telo ozdobené.;Pri výstupe na ne ustanem.;Budem sa po nich túlať, kým nebudú zmapované  ;;;"
                 },
                 "2": {
                     "title": "Nedá sa ujsť",
@@ -370,7 +370,7 @@ var db = {
         },
         "13": {
             "name": "Tomáš Klus",
-            "lang": "sk",
+            "lang": "cz",
             "songs": {
                 "0": {
                     "title": "Do nebe",
@@ -396,7 +396,7 @@ var db = {
         },
         "14": {
             "name": "Buty",
-            "lang": "sk",
+            "lang": "cz",
             "songs": {
                 "0": {
                     "title": "Nad stádem koní PŘESNĚJI",
@@ -576,7 +576,7 @@ var db = {
         },
         "28": {
             "name": "Brontosauři",
-            "lang": "sk",
+            "lang": "cz",
             "songs": {
                 "0": {
                     "title": "Igelit",
@@ -602,7 +602,7 @@ var db = {
         },
         "29": {
             "name": "Nedvedi",
-            "lang": "sk",
+            "lang": "cz",
             "songs": {
                 "0": {
                     "title": "Valčíček",
@@ -616,7 +616,7 @@ var db = {
         },
         "30": {
             "name": "Chinaski",
-            "lang": "sk",
+            "lang": "cz",
             "songs": {
                 "0": {
                     "title": "Klára",
@@ -658,7 +658,7 @@ var db = {
         },
         "33": {
             "name": "Divokej Bill",
-            "lang": "sk",
+            "lang": "cz",
             "songs": {
                 "0": {
                     "title": "Znamení",
