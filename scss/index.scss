@@ -7,10 +7,15 @@ body {
 	vertical-align: super;
 	font-size: 1.5rem;
 }
+.band-wrapper {
+	margin-bottom: 10px;
+}
 .song-name {
 	cursor: pointer;
 }
-
+.song-content-wrapper {
+	padding: 10px;
+}
 .autoscroll {
 	position: fixed;
 	right: 0;
@@ -24,7 +29,9 @@ body {
 	}
 }
 
-.transposition {
-	margin-top: 20px;
-	margin-left: 10px;
+.transposition-button {
+	opacity: 0;
+}
+.list-group {
+	margin-bottom: 10px;
 }

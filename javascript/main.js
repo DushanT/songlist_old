@@ -3,7 +3,8 @@ $(function(){
 	// TweenMax intro
 	var mainContent = $("#main-content"),
 		mainNav = $(".main-nav"),
-		scrollButtons = $(".autoscroll-button");
+		scrollButtons = $(".autoscroll-button"),
+		transpositionButtons = $(".transposition-button");
 
 	var songlistLS = {
 		lastBandId: "",
@@ -72,6 +73,7 @@ $(function(){
 
 	var tlPageLoad = new TimelineMax();
 	var tlOpenSong = new TimelineMax();
+	var tlOpenBand = new TimelineMax();
 	var tlCloseSong = new TimelineMax();
 	var tlCloseBand = new TimelineMax();
 
@@ -83,7 +85,6 @@ $(function(){
 		songlistLS.lastLangId = '#' + $('a', this).attr('id');
 		localStorage.setItem('songlist', JSON.stringify(songlistLS));
 
-		closeSong($(".song-content-wrapper.active"));
 		closeBand($(".band-content-wrapper.active"));
 	});
 
@@ -94,8 +95,7 @@ $(function(){
 		if (next.hasClass('hidden')) {
 			openSong(next);
 		} else {
-			closeSong(next);
-			scrollToElement(_, 1);
+			closeSong(next, _);
 		}
 	});
 
@@ -103,11 +103,9 @@ $(function(){
 		var _ = $(this);
 		var next = _.next();
 		if (next.hasClass('hidden')) {
-			openBand(next);
-			scrollToElement(_, 0.6);
+			openBand(next, _);
 		} else {
-			closeBand(next);
-			scrollToElement(_, 0.6);
+			closeBand(next, _);
 		}
 	});
 
@@ -157,8 +155,10 @@ $(function(){
 
 	var chords = ['A','B','C','D','E','F','G'];
 	
-	$(".transpose").on('click', function () {
-		var $chords = $(this).parents('.song-content-wrapper').find('.chord');
+	transpositionButtons.on('click', function () {
+		TweenMax.fromTo($('> span', this), 0.4, { scale: 2.5 }, { scale: 1 });
+		
+		var $chords = $('.song-content-wrapper.active').find('.chord');
 		var transpose = parseInt($(this).data('transpose'));
 
 		$chords.each(function() {
@@ -225,58 +225,88 @@ $(function(){
 	function openSong(element) {
 		if(element && !element.length) {return;}
 
-		songlistLS.lastSongId = '#' + element.prev().attr('id');
-		localStorage.setItem('songlist', JSON.stringify(songlistLS));
-		
-		$('.song-content-wrapper').addClass('hidden').removeClass('active');
-		TweenMax.set(element, {className:'+=active'});
-		TweenMax.set(element, { className: '-=hidden', opacity: 0 });
-		tlOpenSong.from(element, 0.5, { height: 0, clearProps: 'height' })
-			.to(element, 0.5, { opacity: 1, onComplete: function () {
-				scrollToElement(element.prev(), 0.6);
-				if(element.height() > $(window).height()) {
-					TweenMax.staggerFromTo(scrollButtons, 0.3, { x: 100 }, { autoAlpha: 1, x: 0, ease: Back.easeOut }, 0.05);
-					TweenMax.staggerTo('.autoscroll .glyphicon', 0.3, { rotation: 90, y: 2 }, 0.05);
-				}
-			}}, '-=0.2');
+		closeSong($('.song-content-wrapper.active'), null, function() {
 
+			songlistLS.lastSongId = '#' + element.prev().attr('id');
+			localStorage.setItem('songlist', JSON.stringify(songlistLS));
+			
+			TweenMax.set(element, {className:'+=active'});
+			TweenMax.set(element, { className: '-=hidden', opacity: 0 });
+			tlOpenSong.from(element, 0.5, { height: 0, clearProps: 'height' })
+				.to(element, 0.2, { opacity: 1, onComplete: function () {
+					scrollToElement(element.prev(), 0.6);
+					if(element.height() > $(window).height()) {
+						TweenMax.staggerFromTo(scrollButtons, 0.3, { x: 100 }, { autoAlpha: 1, x: 0, ease: Back.easeOut }, 0.05);
+						TweenMax.staggerTo('.autoscroll-button .glyphicon', 0.3, { rotation: 90, y: 2 }, 0.05);
+					}
+					TweenMax.staggerFromTo(transpositionButtons, 0.3, { x: 100 }, { autoAlpha: 1, x: 0, ease: Back.easeOut }, 0.05);
+				}}, '-=0.2');
+
+		});
 	}
 
-	function closeSong(element) {
-		if(element && !element.length) {return;}
+	function closeSong(element, scrollElement, callback) {
+		if(element && !element.length) { 
+			if (typeof callback === 'function') {
+				callback();
+			}
+			return;
+		}
 		
 		songlistLS.lastSongId = "";
 		localStorage.setItem('songlist', JSON.stringify(songlistLS));
 
 		TweenMax.set(element, {className:'-=active'});
-		tlCloseSong.staggerTo(scrollButtons, 0.3, { rotation: 0, autoAlpha: 0, x: 100, ease: Back.easeInOut }, 0.05)
+		tlCloseSong
 			.to(element, 0.5, { opacity: 0, height: 0 })
-			.set(element, {className: '+=hidden', clearProps: 'height' });
+			.set(element, {className:'+=hidden', clearProps: 'height', onComplete: callback});
+		TweenMax.staggerTo([scrollButtons, transpositionButtons], 0.3, { rotation: 0, autoAlpha: 0, x: 100, ease: Back.easeInOut }, 0.05);
+		
+		if (scrollElement && scrollElement.length) {
+			scrollToElement(scrollElement, 1);
+		}
 	}
 
-	function openBand(element) {
+	function openBand(element, scrollElement) {
 		if(element && !element.length) {return;}
+		
+		closeBand($(".band-content-wrapper.active"), null, function() {
 
-		songlistLS.lastBandId = '#' + element.prev().attr('id');
-		localStorage.setItem('songlist', JSON.stringify(songlistLS));
+			songlistLS.lastBandId = '#' + element.prev().attr('id');
+			localStorage.setItem('songlist', JSON.stringify(songlistLS));
 
-		$('.band-content-wrapper').addClass('hidden');
-		closeSong($('.song-content-wrapper.active'));
-		TweenMax.set(element, {className: '-=hidden', opacity: 0 });
-		TweenMax.to(element, 0.5, { opacity: 1, clearProps: 'height' });
-		TweenMax.set(element, {className: '+=active'});
+			TweenMax.set(element, {className: '-=hidden', opacity: 0 });
+			tlOpenBand.from(element, 0.5, { height: 0, clearProps: 'height' })
+					.to(element, 0.2, { opacity: 1 }, "-=0.2");
+			TweenMax.set(element, {className: '+=active'});
+
+			if (scrollElement && scrollElement.length) {
+				scrollToElement(scrollElement, 1);
+			}
+		});
 	}
 
-	function closeBand(element) {
-		if(element && !element.length) {return;}
+	function closeBand(element, scrollElement, callback) {
+		if(element && !element.length) { 
+			if (typeof callback === 'function') {
+				callback();
+			}
+			return;
+		}
 
-		songlistLS.lastBandId = "";
-		songlistLS.lastSongId = "";
-		localStorage.setItem('songlist', JSON.stringify(songlistLS));
+		closeSong($('.song-content-wrapper.active'), null, function() {
+			songlistLS.lastBandId = "";
+			localStorage.setItem('songlist', JSON.stringify(songlistLS));
 
-		tlCloseBand.to(element, 0.5, { opacity: 0, height: 0 })
-			.set(element, {className: '+=hidden', clearProps: 'height' })
-			.set(element, {className: '-=active'});
+			TweenMax.set(element, {className: '-=active'});
+			tlCloseBand.to(element, 0.5, { opacity: 0, height: 0 })
+				.set(element, {className: '+=hidden', clearProps: 'height', onComplete: callback});
+
+			if (scrollElement && scrollElement.length) {
+				scrollToElement(scrollElement, 1);
+			}
+			
+		});
 	}
 
 	function scrollToElement(element, duration, offset) {
@@ -296,7 +326,7 @@ $(function(){
 		}
 
 		if ((lastBand = $(songlistLS.lastBandId)) && lastBand.length) {
-			openBand(lastBand.next());
+			openBand(lastBand.next(), lastBand);
 		}
 		
 		if ((lastSong = $(songlistLS.lastSongId)) && lastSong.length) {
